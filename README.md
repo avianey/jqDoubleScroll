@@ -61,5 +61,5 @@ Dual licensed under the MIT and GPL licenses:
 
 ## Authors
 
-@sniku : https://github.com/sniku/jQuery-doubleScroll
-@avianey
+-  @sniku : https://github.com/sniku/jQuery-doubleScroll
+-  @avianey
