@@ -34,7 +34,8 @@ You can configure the double scroll with the following options :
 
 ######  contentElement
 
-The element to use as the scroll reference.
+The element to use as the scroll reference.  
+First child element is used if nothing is specified.
 
 ######  scrollCss
 
