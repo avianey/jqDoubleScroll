@@ -16,6 +16,7 @@
  */
 
 jQuery.fn.doubleScroll = function(userOptions) {
+	var $ = jQuery;
 	// Default options
 	var options = {
 		contentElement: undefined, // Widest element, if not specified first child element will be used
