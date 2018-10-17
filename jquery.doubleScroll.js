@@ -23,7 +23,8 @@
 			contentElement: undefined, // Widest element, if not specified first child element will be used
 			scrollCss: {                
 				'overflow-x': 'auto',
-				'overflow-y': 'hidden'
+				'overflow-y': 'hidden',
+				'height': '20px'
 			},
 			contentCss: {
 				'overflow-x': 'auto',
@@ -39,7 +40,7 @@
 		// do not modify
 		// internal stuff
 		$.extend(options, {
-			topScrollBarMarkup: '<div class="doubleScroll-scroll-wrapper" style="height: 20px;"><div class="doubleScroll-scroll" style="height: 20px;"></div></div>',
+			topScrollBarMarkup: '<div class="doubleScroll-scroll-wrapper"><div class="doubleScroll-scroll"></div></div>',
 			topScrollBarWrapperSelector: '.doubleScroll-scroll-wrapper',
 			topScrollBarInnerSelector: '.doubleScroll-scroll'
 		});
@@ -65,6 +66,7 @@
 
 				// apply the css
 				$topScrollBar.css(options.scrollCss);
+				$(options.topScrollBarInnerSelector).css("height", "20px");
 				$self.css(options.contentCss);
 
 				// bind upper scroll to bottom scroll
