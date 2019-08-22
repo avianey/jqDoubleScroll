@@ -14,14 +14,14 @@
  * Usage:
  * https://github.com/avianey/jqDoubleScroll
  */
- (function( $ ) {
- 	
- 	jQuery.fn.doubleScroll = function(userOptions) {
-	
+(function( $ ) {
+
+	jQuery.fn.doubleScroll = function(userOptions) {
+
 		// Default options
 		var options = {
 			contentElement: undefined, // Widest element, if not specified first child element will be used
-			scrollCss: {                
+			scrollCss: {
 				'overflow-x': 'auto',
 				'overflow-y': 'hidden',
 				'height': '20px'
@@ -32,11 +32,13 @@
 			},
 			onlyIfScroll: true, // top scrollbar is not shown if the bottom one is not present
 			resetOnWindowResize: false, // recompute the top ScrollBar requirements when the window is resized
-			timeToWaitForResize: 30 // wait for the last update event (usefull when browser fire resize event constantly during ressing)
+			timeToWaitForResize: 30, // wait for the last update event (usefull when browser fire resize event constantly during ressing)
+			relocatePositionOnScroll: false, // fix very slow scroll when using shift + mouse scroll or keyboard arrow keys
+			timeToWaitForRelocateScroll: 50 // wait for the last scroll event and updates the opposite scroll position
 		};
-	
+
 		$.extend(true, options, userOptions);
-	
+
 		// do not modify
 		// internal stuff
 		$.extend(options, {
@@ -53,12 +55,12 @@
 				$self.prev(options.topScrollBarWrapperSelector).remove();
 				return;
 			}
-		
+
 			// add div that will act as an upper scroll only if not already added to the DOM
 			var $topScrollBar = $self.prev(options.topScrollBarWrapperSelector);
-			
+
 			if ($topScrollBar.length == 0) {
-				
+
 				// creating the scrollbar
 				// added before in the DOM
 				$topScrollBar = $(options.topScrollBarMarkup);
@@ -81,37 +83,56 @@
 				$self.bind('scroll.doubleScroll', selfScrollHandler);
 			}
 
-			// find the content element (should be the widest one)	
-			var $contentElement;		
-			
+			// find the content element (should be the widest one)
+			var $contentElement;
+
 			if (options.contentElement !== undefined && $self.find(options.contentElement).length !== 0) {
 				$contentElement = $self.find(options.contentElement);
 			} else {
 				$contentElement = $self.find('>:first-child');
 			}
-			
+
+			if (options.relocatePositionOnScroll) {
+
+				// unbind upper scroll to bottom scroll
+				$topScrollBar.unbind('scroll.doubleScroll');
+
+				// unbind bottom scroll to upper scroll
+				$self.unbind('scroll.doubleScroll');
+
+				// add scrollEnd custom function to upper scroll
+				$topScrollBar.scrollEnd(function () {
+					$self.scrollLeft($topScrollBar.scrollLeft());
+				}, options.timeToWaitForRelocateScroll);
+
+				// add scrollEnd custom function to bottom scroll
+				$self.scrollEnd(function () {
+					$topScrollBar.scrollLeft($self.scrollLeft());
+				}, options.timeToWaitForRelocateScroll);
+			}
+
 			// set the width of the wrappers
 			$(options.topScrollBarInnerSelector, $topScrollBar).width($contentElement.outerWidth());
 			$topScrollBar.width($self.width());
 			$topScrollBar.scrollLeft($self.scrollLeft());
-			
-		}
-	
+
+		};
+
 		return this.each(function() {
-			
+
 			var $self = $(this);
-			
+
 			_showScrollBar($self, options);
-			
-			// bind the resize handler 
+
+			// bind the resize handler
 			// do it once
 			if (options.resetOnWindowResize) {
-			
+
 				var id;
 				var handler = function(e) {
 					_showScrollBar($self, options);
 				};
-			
+
 				$(window).bind('resize.doubleScroll', function() {
 					// adding/removing/replacing the scrollbar might resize the window
 					// so the resizing flag will avoid the infinite loop here...
@@ -123,6 +144,16 @@
 
 		});
 
-	}
+	};
+
+	jQuery.fn.scrollEnd = function(callback, timeout) {
+		$(this).scroll(function(){
+			var $this = $(this);
+			if ($this.data('scrollTimeout')) {
+				clearTimeout($this.data('scrollTimeout'));
+			}
+			$this.data('scrollTimeout', setTimeout(callback,timeout));
+		});
+	};
 
 }( jQuery ));
