@@ -69,13 +69,25 @@
 				$(options.topScrollBarInnerSelector).css("height", "20px");
 				$self.css(options.contentCss);
 
+				var scrolling = false;
+
 				// bind upper scroll to bottom scroll
 				$topScrollBar.bind('scroll.doubleScroll', function() {
+					if (scrolling) {
+						scrolling = false;
+						return;
+					}
+					scrolling = true;
 					$self.scrollLeft($topScrollBar.scrollLeft());
 				});
 
 				// bind bottom scroll to upper scroll
 				var selfScrollHandler = function() {
+					if (scrolling) {
+						scrolling = false;
+						return;
+					}
+					scrolling = true;
 					$topScrollBar.scrollLeft($self.scrollLeft());
 				};
 				$self.bind('scroll.doubleScroll', selfScrollHandler);
