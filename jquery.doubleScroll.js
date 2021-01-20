@@ -47,7 +47,7 @@
 
 		var _showScrollBar = function($self, options) {
 
-			if (options.onlyIfScroll && $self.get(0).scrollWidth <= $self.width()) {
+			if (options.onlyIfScroll && $self.get(0).scrollWidth <= Math.round($self.width())) {
 				// content doesn't scroll
 				// remove any existing occurrence...
 				$self.prev(options.topScrollBarWrapperSelector).remove();
