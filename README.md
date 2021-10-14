@@ -66,9 +66,9 @@ The function is used to customize wrapper scrollbar and inner scrollbar as neede
 You can apply style not used globally, you can move the top scrollbar after header (example: https://jsfiddle.net/adrwxgvo/10/ ), and so on.
 
 Arguments:
-  e: resize event argument (can be undefined if it's not called from a window resize)
-  $self: the jQuery element which has the doubleScroll function applied to
-  options: the options used to create the double scroll, with all it's internally added info (topScrollBarWrapperSelector, topScrollBarInnerSelector and so on)
+- e: resize event argument (can be undefined if it's not called from a window resize)
+- $self: the jQuery element which has the doubleScroll function applied to
+- options: the options used to create the double scroll, with all it's internally added info (topScrollBarWrapperSelector, topScrollBarInnerSelector and so on)
 
 ## Licence
 
