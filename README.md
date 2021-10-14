@@ -30,9 +30,11 @@ You can configure the double scroll with the following options :
 	onlyIfScroll: true, // top scrollbar is not shown if the bottom one is not present
 	resetOnWindowResize: false, // recompute the top ScrollBar requirements when the window is resized
 	customizeAfterShowFunction: function(e, $self, options) { // this function is called every time a double scroll show happens (can be called many times, if window resizes happen)
-		var wrapperScrollbarElement = $(options.topScrollBarWrapperSelector); // get the element with '.doubleScroll-scroll-wrapper'
-		var innerScrollbarElement = $(options.topScrollBarInnerSelector); // get the element with '.doubleScroll-scroll'
-		// customize wrapper and inner scrollbar as needed, after the proper show
+		var wrapperScrollbarElement = $(options.topScrollBarWrapperSelector); // get the element with class 'doubleScroll-scroll-wrapper' to modify it if needed
+		var innerScrollbarElement = $(options.topScrollBarInnerSelector); // get the element with class 'doubleScroll-scroll' to modify it if needed
+		
+		// The function is used to customize wrapper scrollbar and inner scrollbar as needed, after the double scrollbar show.
+		
 		// Arguments:
 		//  e: resize event argument (can be undefined if it's not called from a window resize)
 		//  $self: the jQuery element which has the doubleScroll function applied to
