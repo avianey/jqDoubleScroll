@@ -32,7 +32,8 @@
 			},
 			onlyIfScroll: true, // top scrollbar is not shown if the bottom one is not present
 			resetOnWindowResize: false, // recompute the top ScrollBar requirements when the window is resized
-			timeToWaitForResize: 30 // wait for the last update event (usefull when browser fire resize event constantly during ressing)
+			timeToWaitForResize: 30, // wait for the last update event (usefull when browser fire resize event constantly during ressing)
+			customizeAfterShowFunction: undefined // function to customize after show
 		};
 	
 		$.extend(true, options, userOptions);
@@ -115,6 +116,10 @@
 			
 			_showScrollBar($self, options);
 			
+			// customize show function added on show handler
+			if (options.customizeAfterShowFunction && typeof options.customizeAfterShowFunction == "function")
+				options.customizeAfterShowFunction(undefined, $self, options);
+			
 			// bind the resize handler 
 			// do it once
 			if (options.resetOnWindowResize) {
@@ -122,6 +127,10 @@
 				var id;
 				var handler = function(e) {
 					_showScrollBar($self, options);
+
+					// customize show function added on show handler
+					if (options.customizeAfterShowFunction && typeof options.customizeAfterShowFunction == "function")
+						options.customizeAfterShowFunction(e, $self, options);
 				};
 			
 				$(window).bind('resize.doubleScroll', function() {

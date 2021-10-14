@@ -28,7 +28,13 @@ You can configure the double scroll with the following options :
 		'overflow-y': 'hidden'
 	},
 	onlyIfScroll: true, // top scrollbar is not shown if the bottom one is not present
-	resetOnWindowResize: false // recompute the top ScrollBar requirements when the window is resized
+	resetOnWindowResize: false, // recompute the top ScrollBar requirements when the window is resized
+	customizeAfterShowFunction: function(e, $self, options) { // 
+		var wrapperScrollbarElement = $(options.topScrollBarWrapperSelector); // get the element with class 'doubleScroll-scroll-wrapper' to modify it if needed
+		var innerScrollbarElement = $(options.topScrollBarInnerSelector); // get the element with class 'doubleScroll-scroll' to modify it if needed
+		
+		// Do some double scrollbar customization after the double scrollbar showing using elements $self (bottom scrollbar), wrapperScrollbarElement (element with the top scrollbar), innerScrollbarElement (inner top element width makes the scrollbar size match the bottom scrollbar size).
+	}
 }
 ```
 
@@ -53,6 +59,16 @@ If **true**, will display the top scrollbar only if the content is scrollable...
 
 If **true**, will attach an event to regenerate the top scrollbar when the window is resized.  
 Use it when the scrollable element has a width which is relative to the window width.
+
+###### customizeAfterShowFunction
+
+The function is used to customize wrapper scrollbar and inner scrollbar as needed, after the double scrollbar show occurs (can be called many times, if window resizes happen).
+You can apply style not used globally, you can move the top scrollbar after header (example: https://jsfiddle.net/adrwxgvo/10/ ), and so on.
+
+Arguments:
+- e: resize event argument (can be undefined if it's not called from a window resize)
+- $self: the jQuery element which has the doubleScroll function applied to
+- options: the options used to create the double scroll, with all it's internally added info (topScrollBarWrapperSelector, topScrollBarInnerSelector and so on)
 
 ## Licence
 
