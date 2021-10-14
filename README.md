@@ -28,7 +28,16 @@ You can configure the double scroll with the following options :
 		'overflow-y': 'hidden'
 	},
 	onlyIfScroll: true, // top scrollbar is not shown if the bottom one is not present
-	resetOnWindowResize: false // recompute the top ScrollBar requirements when the window is resized
+	resetOnWindowResize: false, // recompute the top ScrollBar requirements when the window is resized
+	customizeAfterShowFunction: function(e, $self, options) { // this function is called every time a double scroll show happens (can be called many times, because window resize happens)
+		var wrapperScrollbarElement = $(options.topScrollBarWrapperSelector); // get the element with '.doubleScroll-scroll-wrapper'
+		var innerScrollbarElement = $(options.topScrollBarInnerSelector); // get the element with '.doubleScroll-scroll'
+		// customize wrapper and inner scrollbar as needed, after the proper show
+		// Arguments:
+		//  e: resize event argument (can be undefined if it's not called from a window resize)
+		//  $self: the jQuery element which has the doubleScroll function applied to
+		//  options: the options used to create the double scroll, with all it's internally added info (topScrollBarWrapperSelector, topScrollBarInnerSelector and so on)
+	}
 }
 ```
 
