@@ -30,6 +30,7 @@
 				'overflow-x': 'auto',
 				'overflow-y': 'hidden'
 			},
+			rightPaddingPx: 20, //custom rightPadding if needed. Otherwise set to 0
 			onlyIfScroll: true, // top scrollbar is not shown if the bottom one is not present
 			resetOnWindowResize: false, // recompute the top ScrollBar requirements when the window is resized
 			timeToWaitForResize: 30 // wait for the last update event (usefull when browser fire resize event constantly during ressing)
@@ -101,7 +102,11 @@
 			} else {
 				$contentElement = $self.find('>:first-child');
 			}
-			
+
+			//make sure scrollbarWidth does not go beyond window width
+			var scrollbarWidth = $(window).width() - $self.offset().left - options.rightPaddingPx;
+			$self.css("max-width", scrollbarWidth + "px");
+		
 			// set the width of the wrappers
 			$(options.topScrollBarInnerSelector, $topScrollBar).width($contentElement.outerWidth());
 			$topScrollBar.width($self.width());
