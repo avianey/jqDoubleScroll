@@ -30,7 +30,7 @@
 				'overflow-x': 'auto',
 				'overflow-y': 'hidden'
 			},
-			rightPaddingPx: 20, //custom rightPadding if needed. Otherwise set to 0
+			rightPaddingPx: 0, //custom rightPadding if needed. Otherwise set to 0
 			onlyIfScroll: true, // top scrollbar is not shown if the bottom one is not present
 			resetOnWindowResize: false, // recompute the top ScrollBar requirements when the window is resized
 			timeToWaitForResize: 30 // wait for the last update event (usefull when browser fire resize event constantly during ressing)
